@@ -1,12 +1,12 @@
 package com.bignerdranch.android.criminalintent
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import java.util.UUID
+import android.os.Bundle
+import android.util.Log
+import java.util.*
 
+private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity(), CrimeListFragment.Callbacks {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
