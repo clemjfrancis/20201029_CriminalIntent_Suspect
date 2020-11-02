@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">犯罪意图</string>
+    <string name="crime_title_hint">输入犯罪的标题。</string>
+    <string name="crime_title_label">标题</string>
+    <string name="crime_details_label">细节</string>
+    <string name="crime_solved_label">案</string>
+    <string name="new_crime">新罪</string>
+    <string name="crime_suspect_text">择嫌</string>
+    <string name="crime_report_text">报案</string>
+    <string name="crime_report_solved">案子破了</string>
+    <string name="crime_report_unsolved">案子没有破</string>
+    <string name="crime_report_no_suspect">没有嫌疑人。.</string>
+    <string name="crime_report_suspect">嫌疑人是%s.</string>
+    <string name="crime_report_subject">犯罪意图罪案报告</string>
+    <string name="send_report">报案，通过</string>
+    <string name="crime_report">"%1$s!
+        案发于%2$s。%3$s，然后%4$s  "</string>
+</resources>
