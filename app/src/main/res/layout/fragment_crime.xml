@@ -83,4 +83,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/crime_report_text"/>
+
+    <Spinner
+        android:id="@+id/spinner_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="fill_horizontal"/>
+
+    <Button
+        android:id="@+id/spinner_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Toast Selected"/>
 </LinearLayout>

@@ -45,6 +45,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
     private lateinit var suspectButton: Button
     private lateinit var photoButton: ImageButton
     private lateinit var photoView: ImageView
+    private lateinit var spinner: Spinner
     private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
         ViewModelProviders.of(this).get(CrimeDetailViewModel::class.java)
     }
@@ -54,6 +55,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         crime = Crime()
         val crimeID: UUID = arguments?.getSerializable(ARG_CRIME_ID) as UUID
         crimeDetailViewModel.loadCrime(crimeID)
+
     }
 
 
@@ -71,7 +73,18 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         suspectButton = view.findViewById(R.id.crime_suspect) as Button
         photoButton = view.findViewById(R.id.crime_camera) as ImageButton
         photoView = view.findViewById(R.id.crime_photo) as ImageView
+        spinner = view.findViewById(R.id.spinner_options) as Spinner
 
+        context?.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.crimes_array,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner.adapter = adapter
+            }
+        }
         return view
     }
 
@@ -192,6 +205,8 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
                 startActivityForResult(captureImage, REQUEST_PHOTO)
             }
         }
+
+
     }
 
     override fun onStop() {
