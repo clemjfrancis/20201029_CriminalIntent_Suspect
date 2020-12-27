@@ -8,17 +8,20 @@
     <string name="crime_suspect_text">Choose Suspect</string>
     <string name="crime_report_text">Send Crime Report</string>
     <string name="crime_report">"%1$s!
-        The crime was discovered on %2$s. %3$s, and %4$s     "</string>
+        The crime was discovered on %2$s. %3$s, and %4$s \n%5$s \n%6$s     "</string>
     <string name="crime_report_solved">The case is solved</string>
     <string name="crime_report_unsolved">The case is not solved</string>
     <string name="crime_report_no_suspect">there is no suspect.</string>
     <string name="crime_report_suspect">the suspect is %s.</string>
+    <string name="crime_report_no_details"> "Crime Details: There are no details at this time"</string>
+    <string name="crime_report_details"> "Crime Details: %s"</string>
+    <string name="crime_report_solve_details">Solve Details: %s</string>
     <string name="crime_report_subject">CriminalIntent Crime Report</string>
     <string name="send_report">Send crime report via</string>
-    <string name="crime_title" translatable="false">Crime Title</string>
-    <string name="crime_date" translatable="false">Crime Date</string>
+    <string name="crime_title">Crime Title</string>
+    <string name="crime_date">Crime Date</string>
     <string name="solve_details_label">Solve Details</string>
-    <string name="solve_hint">Enter solve details here...</string>
+    <string name="solve_hint">Enter solve details here…</string>
     <string-array name="crimes_array">
         <item>Theft</item>
         <item>Robbery</item>

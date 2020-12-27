@@ -116,8 +116,8 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
                     this.crime = crime
                     photoFile = crimeDetailViewModel.getPhotoFile(crime)
                     photoUri = FileProvider.getUriForFile(requireActivity(),
-                            "com.bignerdranch.android.criminalintent.fileprovider",
-                            photoFile)
+                        "com.bignerdranch.android.criminalintent.fileprovider",
+                        photoFile)
                     updateUI()
                 }
             })
@@ -173,7 +173,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
                     setTargetFragment(this@CrimeFragment, REQUEST_DATE)
                     show(this@CrimeFragment.requireFragmentManager(), DIALOG_DATE)
                 }
-        }
+            }
         }
 
         reportButton.setOnClickListener {
@@ -181,8 +181,8 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, getCrimeReport())
                 putExtra(
-                        Intent.EXTRA_SUBJECT,
-                        getString(R.string.crime_report_subject))
+                    Intent.EXTRA_SUBJECT,
+                    getString(R.string.crime_report_subject))
             }.also { intent ->
                 val chooserIntent = Intent.createChooser(intent, getString(R.string.send_report))
                 startActivity(chooserIntent)
@@ -191,7 +191,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
 
         suspectButton.apply {
             val pickContactIntent =
-                    Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+                Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
 
             setOnClickListener {
                 startActivityForResult(pickContactIntent, REQUEST_CONTACT)
@@ -199,7 +199,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
 
             val packageManager: PackageManager = requireActivity().packageManager
             val resolvedActivity: ResolveInfo? =
-                    packageManager.resolveActivity(pickContactIntent,
+                packageManager.resolveActivity(pickContactIntent,
                     PackageManager.MATCH_DEFAULT_ONLY)
             if (resolvedActivity == null) {
                 isEnabled = false
@@ -211,7 +211,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
 
             val captureImage = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             val resolvedActivity: ResolveInfo? =
-                    packageManager.resolveActivity(captureImage,
+                packageManager.resolveActivity(captureImage,
                     PackageManager.MATCH_DEFAULT_ONLY)
             if (resolvedActivity == null) {
                 isEnabled = false
@@ -221,14 +221,14 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
                 captureImage.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
 
                 val cameraActivities: List<ResolveInfo> =
-                        packageManager.queryIntentActivities(captureImage,
-                                PackageManager.MATCH_DEFAULT_ONLY)
+                    packageManager.queryIntentActivities(captureImage,
+                        PackageManager.MATCH_DEFAULT_ONLY)
 
                 for (cameraActivity in cameraActivities) {
                     requireActivity().grantUriPermission(
-                            cameraActivity.activityInfo.packageName,
-                            photoUri,
-                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                        cameraActivity.activityInfo.packageName,
+                        photoUri,
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 }
 
                 startActivityForResult(captureImage, REQUEST_PHOTO)
@@ -315,7 +315,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
                 // Perform your query - the contactURI is like a where clause here
                 val cursor = contactUri?.let {
                     requireActivity().contentResolver
-                            .query(it, queryFields, null, null, null)
+                        .query(it, queryFields, null, null, null)
                 }
                 cursor?.use {
                     // Verify cursor contains at least one result
@@ -335,7 +335,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
 
             requestCode == REQUEST_PHOTO -> {
                 requireActivity().revokeUriPermission(photoUri,
-                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 updatePhotoViewer()
             }
         }
@@ -354,8 +354,20 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
         } else {
             getString(R.string.crime_report_suspect, crime.suspect)
         }
+        val details = if(crime.details.isBlank()) {
+            getString(R.string.crime_report_no_details)
+        } else {
+            getString(R.string.crime_report_details, crime.details)
+        }
+        val solveDetails = if (crime.solveDetails.isNullOrBlank()) {
+            ""
+        } else {
+            getString(R.string.crime_report_solve_details, crime.solveDetails)
 
-        return getString(R.string.crime_report, crime.title, dateString, solvedString, suspect)
+        }
+
+        return getString(R.string.crime_report, crime.title,
+            dateString, solvedString, suspect, details, solveDetails)
     }
 
     companion object{
