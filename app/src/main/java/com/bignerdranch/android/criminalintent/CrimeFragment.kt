@@ -29,7 +29,9 @@ private const val REQUEST_DATE = 0
 private const val REQUEST_CONTACT = 1
 private const val REQUEST_PHOTO = 2
 private const val DATE_FORMAT = "EEE, MMM, dd"
-class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
+private const val DIALOG_TIME = "DialogTime"
+private const val REQUEST_TIME = 1
+class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragment.Callbacks {
 
 
 
@@ -208,6 +210,26 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
 
     override fun onDateSelected(date: Date) {
         crime.date = date
+        TimePickerFragment.newInstance(crime.date).apply {
+            setTargetFragment(this@CrimeFragment, REQUEST_TIME)
+            show(this@CrimeFragment.requireFragmentManager(), DIALOG_TIME)
+        }
+    }
+    override fun onTimeSelected(date: Date) {
+        val oldDates = Calendar.getInstance()
+        oldDates.time = crime.date
+        val year = oldDates.get(Calendar.YEAR)
+        val month = oldDates.get(Calendar.MONTH)
+        val day = oldDates.get(Calendar.DAY_OF_MONTH)
+
+        val newTimes = Calendar.getInstance()
+        newTimes.time = date
+        val hour = newTimes.get(Calendar.HOUR_OF_DAY)
+        val minute = newTimes.get(Calendar.MINUTE)
+
+        val finalDate = Calendar.getInstance()
+        finalDate.set(year, month, day, hour, minute )
+        crime.date = finalDate.time
         updateUI()
     }
 
