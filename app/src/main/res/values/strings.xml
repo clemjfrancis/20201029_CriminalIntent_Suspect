@@ -17,6 +17,8 @@
     <string name="send_report">Send crime report via</string>
     <string name="crime_title" translatable="false">Crime Title</string>
     <string name="crime_date" translatable="false">Crime Date</string>
+    <string name="solve_details_label">Solve Details</string>
+    <string name="solve_hint">Enter solve details here...</string>
     <string-array name="crimes_array">
         <item>Theft</item>
         <item>Robbery</item>

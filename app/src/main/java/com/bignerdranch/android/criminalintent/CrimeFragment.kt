@@ -48,6 +48,9 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
     private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
         ViewModelProviders.of(this).get(CrimeDetailViewModel::class.java)
     }
+    private lateinit var crimeDetails: EditText
+    private lateinit var crimeSolvedTitle: TextView
+    private lateinit var crimeSolvedDetails: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +75,9 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
         photoButton = view.findViewById(R.id.crime_camera) as ImageButton
         photoView = view.findViewById(R.id.crime_photo) as ImageView
         titleSpinner = view.findViewById(R.id.spinner_options) as Spinner
+        crimeDetails = view.findViewById(R.id.crime_details) as EditText
+        crimeSolvedTitle = view.findViewById(R.id.solve_title) as TextView
+        crimeSolvedDetails = view.findViewById(R.id.solve_details) as EditText
 
         context?.let {
             ArrayAdapter.createFromResource(
@@ -120,12 +126,46 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
     override fun onStart() {
         super.onStart()
 
+        val detailsWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun onTextChanged(sequence: CharSequence?, start: Int, before: Int, count: Int) {
+                crime.details = sequence.toString()
+            }
+
+        }
+        crimeDetails.addTextChangedListener(detailsWatcher)
+        val solveWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun onTextChanged(sequence: CharSequence?, start: Int, before: Int, count: Int) {
+                crime.solveDetails = sequence.toString()
+            }
+        }
+        crimeSolvedDetails.addTextChangedListener(solveWatcher)
+
 
 
 
         solvedCheckBox.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 crime.isSolved = isChecked
+                if (isChecked) {
+                    crimeSolvedDetails.visibility = View.VISIBLE
+                    crimeSolvedTitle.visibility = View.VISIBLE
+                }
+                else {
+                    crime.solveDetails = null
+                    crimeSolvedDetails.visibility = View.INVISIBLE
+                    crimeSolvedTitle.visibility = View.INVISIBLE
+                }
             }
 
             dateButton.setOnClickListener{
@@ -241,14 +281,17 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
             this.setSelection(itemPosition)
         }
 
-        dateButton.text = crime.date.toString()
+        dateButton.text = DateFormat.format("EEE MMMM dd yyyy h:mm aa", this.crime.date)
         solvedCheckBox.apply {
             isChecked = crime.isSolved
+
             jumpDrawablesToCurrentState()
         }
         if (crime.suspect.isNotEmpty()) {
             suspectButton.text = crime.suspect
         }
+        crimeDetails.setText(crime.details)
+        crimeSolvedDetails.setText(crime.solveDetails)
         updatePhotoViewer()
     }
 
