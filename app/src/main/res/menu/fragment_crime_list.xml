@@ -6,4 +6,17 @@
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/new_crime"
         app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/show_archived"
+        android:title="@string/show_archived"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/sort_by"
+        android:title="@string/sort_by"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/export_csv"
+        android:title="@string/export_csv"
+        app:showAsAction="never"/>
+
 </menu>

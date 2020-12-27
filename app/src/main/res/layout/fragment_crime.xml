@@ -49,7 +49,7 @@
                         android:src="@android:drawable/ic_menu_camera" />
 
                     <ImageButton
-                        android:id="@+id/crime_filechooser"
+                        android:id="@+id/crime_file_chooser"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@android:drawable/ic_menu_gallery" />

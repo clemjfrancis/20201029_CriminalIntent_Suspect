@@ -24,6 +24,10 @@
     <string name="solve_hint">Enter solve details here…</string>
     <string name="crime_photo">Crime Scene Photo</string>
     <string name="dismiss">Dismiss</string>
+    <string name="show_archived">Show Archived</string>
+    <string name="sort_by">Sort By</string>
+    <string name="export_csv">Export CSV</string>
+    <string name="options">Options</string>
     <string-array name="crimes_array">
         <item>Theft</item>
         <item>Robbery</item>
