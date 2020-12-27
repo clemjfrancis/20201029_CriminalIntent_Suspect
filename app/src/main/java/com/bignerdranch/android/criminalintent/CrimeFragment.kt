@@ -10,12 +10,10 @@ import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import java.util.*
 import androidx.lifecycle.Observer
@@ -38,14 +36,13 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
     private lateinit var crime: Crime
     private lateinit var photoFile: File
     private lateinit var photoUri: Uri
-    private lateinit var titleField: EditText
     private lateinit var dateButton: Button
     private lateinit var solvedCheckBox: CheckBox
     private lateinit var reportButton: Button
     private lateinit var suspectButton: Button
     private lateinit var photoButton: ImageButton
     private lateinit var photoView: ImageView
-    private lateinit var spinner: Spinner
+    private lateinit var titleSpinner: Spinner
     private val crimeDetailViewModel: CrimeDetailViewModel by lazy {
         ViewModelProviders.of(this).get(CrimeDetailViewModel::class.java)
     }
@@ -66,14 +63,13 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_crime, container, false)
 
-        titleField = view.findViewById(R.id.crime_title) as EditText
         dateButton = view.findViewById(R.id.crime_date) as Button
         solvedCheckBox = view.findViewById(R.id.crime_solved) as CheckBox
         reportButton = view.findViewById(R.id.crime_report) as Button
         suspectButton = view.findViewById(R.id.crime_suspect) as Button
         photoButton = view.findViewById(R.id.crime_camera) as ImageButton
         photoView = view.findViewById(R.id.crime_photo) as ImageView
-        spinner = view.findViewById(R.id.spinner_options) as Spinner
+        titleSpinner = view.findViewById(R.id.spinner_options) as Spinner
 
         context?.let {
             ArrayAdapter.createFromResource(
@@ -82,9 +78,24 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
                 android.R.layout.simple_spinner_item
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner.adapter = adapter
+                titleSpinner.adapter = adapter
             }
         }
+        titleSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                crime.title = titleSpinner.selectedItem.toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+        }
+
         return view
     }
 
@@ -107,32 +118,8 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
     override fun onStart() {
         super.onStart()
 
-        val titleWatcher = object : TextWatcher {
 
-            override fun beforeTextChanged(
-                sequence: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-                // This space intentionally left blank
-            }
 
-            override fun onTextChanged(
-                sequence: CharSequence?,
-                start: Int,
-                before: Int,
-                count: Int
-            ) {
-                crime.title = sequence.toString()
-            }
-
-            override fun afterTextChanged(sequence: Editable?) {
-                // This one too
-            }
-        }
-
-        titleField.addTextChangedListener(titleWatcher)
 
         solvedCheckBox.apply {
             setOnCheckedChangeListener { _, isChecked ->
@@ -225,7 +212,13 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
     }
 
     private fun updateUI() {
-        titleField.setText(crime.title)
+        titleSpinner.apply {
+            val itemPosition = resources.getStringArray(R.array.crimes_array)
+                .toList()
+                .indexOf(crime.title)
+            this.setSelection(itemPosition)
+        }
+
         dateButton.text = crime.date.toString()
         solvedCheckBox.apply {
             isChecked = crime.isSolved
