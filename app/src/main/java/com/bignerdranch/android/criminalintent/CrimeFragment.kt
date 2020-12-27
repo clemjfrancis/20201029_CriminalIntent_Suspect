@@ -31,6 +31,8 @@ private const val REQUEST_PHOTO = 2
 private const val DATE_FORMAT = "EEE, MMM, dd"
 private const val DIALOG_TIME = "DialogTime"
 private const val REQUEST_TIME = 1
+private const val DIALOG_PICTURE = "DialogePicture"
+
 class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragment.Callbacks {
 
 
@@ -204,6 +206,14 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
             if (resolvedActivity == null) {
                 isEnabled = false
             }
+        }
+        photoView.setOnClickListener{
+            if (photoFile.exists())
+            {
+                PictureDialogFragment.newInstance(photoFile).apply {
+                    show(this@CrimeFragment.requireFragmentManager(), DIALOG_PICTURE ) }
+            }
+
         }
 
         photoButton.apply {

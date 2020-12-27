@@ -22,6 +22,8 @@
     <string name="crime_date">Crime Date</string>
     <string name="solve_details_label">Solve Details</string>
     <string name="solve_hint">Enter solve details here…</string>
+    <string name="crime_photo">Crime Scene Photo</string>
+    <string name="dismiss">Dismiss</string>
     <string-array name="crimes_array">
         <item>Theft</item>
         <item>Robbery</item>
