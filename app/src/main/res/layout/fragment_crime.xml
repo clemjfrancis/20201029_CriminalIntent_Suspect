@@ -46,11 +46,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/crime_title_label"/>
 
-            <EditText
-                android:id="@+id/crime_title"
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/spinner_options"
+                android:layout_width="275dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/crime_title_hint"/>
+                android:layout_gravity="center_horizontal"
+                android:gravity="fill_horizontal" />
+
         </LinearLayout>
     </LinearLayout>
 
@@ -83,4 +85,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/crime_report_text"/>
+
+    <Button
+        android:id="@+id/spinner_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Toast Selected"/>
 </LinearLayout>

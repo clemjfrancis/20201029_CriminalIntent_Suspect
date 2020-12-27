@@ -17,4 +17,16 @@
     <string name="send_report">Send crime report via</string>
     <string name="crime_title" translatable="false">Crime Title</string>
     <string name="crime_date" translatable="false">Crime Date</string>
+    <string-array name="crimes_array">
+        <item>Theft</item>
+        <item>Robbery</item>
+        <item>Suicide</item>
+        <item>Homicide</item>
+        <item>Kidnapping</item>
+        <item>Arson</item>
+        <item>Smuggling</item>
+        <item>Petty Crime</item>
+        <item>Felony</item>
+        <item>Other</item>
+    </string-array>
 </resources>
