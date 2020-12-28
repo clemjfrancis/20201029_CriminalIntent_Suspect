@@ -1,6 +1,7 @@
 package com.bignerdranch.android.criminalintent
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
@@ -10,14 +11,12 @@ import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import java.util.*
 import androidx.lifecycle.Observer
 import android.text.format.DateFormat
+import android.view.*
 import android.widget.*
 import androidx.core.content.FileProvider
 import java.io.File
@@ -59,6 +58,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
         crime = Crime()
         val crimeID: UUID = arguments?.getSerializable(ARG_CRIME_ID) as UUID
         crimeDetailViewModel.loadCrime(crimeID)
+        setHasOptionsMenu(true)
 
     }
 
@@ -348,6 +348,32 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 updatePhotoViewer()
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_crime, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.delete_crime -> {
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle("Criminal Intent")
+                    setMessage("Do you want to delete the crime")
+                    setIcon(R.drawable.ic_delete)
+                    setPositiveButton("Yes") { dialog, _ ->
+                        dialog.dismiss()
+                        crimeDetailViewModel.deleteCrime(crime)
+                        activity?.onBackPressed()
+                    }
+                    setNegativeButton("No") { dialog, _ -> dialog.dismiss()
+                    }
+                }.show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

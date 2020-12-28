@@ -28,6 +28,9 @@
     <string name="sort_by">Sort By</string>
     <string name="export_csv">Export CSV</string>
     <string name="options">Options</string>
+    <string name="archive_crime">Archive Crime</string>
+    <string name="delete_crime">Delete Crime</string>
+    <string name="active_crime">Active Crime</string>
     <string-array name="crimes_array">
         <item>Theft</item>
         <item>Robbery</item>
